@@ -1,8 +1,8 @@
 import akka.Done
 import akka.actor.ActorSystem
-import akka.kafka.scaladsl.Consumer
+import akka.kafka.scaladsl.{Committer, Consumer}
 import akka.kafka.scaladsl.Consumer.DrainingControl
-import akka.kafka.{ConsumerSettings, Subscriptions}
+import akka.kafka.{CommitterSettings, ConsumerSettings, Subscriptions}
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Keep, Sink, Source}
 import com.sksamuel.avro4s.RecordFormat
@@ -40,8 +40,9 @@ object KafkaConsumer {
     done.onComplete(_ => system.terminate())
   }
 
-  private def source(implicit executionContext: ExecutionContext): Source[Done, Consumer.Control] = {
+  private def source(implicit executionContext: ExecutionContext, system: ActorSystem): Source[Done, Consumer.Control] = {
     val consumerConfig = config.getConfig("akka.kafka.consumer")
+    val committerConfig = config.getConfig( CommitterSettings.configPath )
     val bootstrapServers = config.getString("bootstrapServers")
     val topic = config.getString("topic")
     val groupId = config.getString("consumer.groupId")
@@ -59,7 +60,7 @@ object KafkaConsumer {
       .mapAsync(10) { msg =>
         processMessage(msg.record.key, msg.record.value).map(_ => msg.committableOffset)
       }
-      .mapAsync(5)(offset => offset.commitScaladsl())
+      .via(Committer.flow(CommitterSettings(committerConfig)))
   }
 
   private def processMessage(key: String, value: AnyRef): Future[Done] = {
