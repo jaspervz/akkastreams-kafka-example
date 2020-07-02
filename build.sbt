@@ -1,17 +1,17 @@
 lazy val commonSettings = Seq(
   name := "akkastreams kafka example",
   version := "1.0-SNAPSHOT",
-  scalaVersion := "2.12.7"
+  scalaVersion := "2.13.1"
 )
 
 resolvers ++= Seq(
   "confluent" at "http://packages.confluent.io/maven/")
 
-lazy val AkkaStreamKafkaVersion = "0.22"
+lazy val AkkaStreamKafkaVersion = "2.0.2"
 
-lazy val Avro4sVersion = "1.9.0"
+lazy val Avro4sVersion = "3.1.1"
 
-lazy val KafkaAvroSerializerVersion = "4.1.2"
+lazy val KafkaAvroSerializerVersion = "5.5.0"
 
 lazy val LogbackVersion = "1.2.3"
 
