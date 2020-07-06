@@ -12,7 +12,7 @@ import io.confluent.kafka.serializers.{AbstractKafkaAvroSerDeConfig, KafkaAvroSe
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.StringSerializer
 
-import scala.collection.JavaConverters.mapAsJavaMapConverter
+import scala.jdk.CollectionConverters._
 import scala.concurrent.{ExecutionContext, Future}
 
 object KafkaProducer {
@@ -25,7 +25,7 @@ object KafkaProducer {
 
     val done: Future[Done] = source.runWith(sink)
 
-    done.onComplete(_ ⇒ system.terminate())
+    done.onComplete(_ => system.terminate())
   }
 
   private def source: Source[ProducerRecord[String, AnyRef], NotUsed] = {

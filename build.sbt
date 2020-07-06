@@ -1,7 +1,13 @@
 lazy val commonSettings = Seq(
   name := "akkastreams kafka example",
   version := "1.0-SNAPSHOT",
-  scalaVersion := "2.13.1"
+  scalaVersion := "2.13.3",
+  scalacOptions ++= Seq(
+    "-deprecation",
+    "-Xfatal-warnings",
+    "-Ywarn-value-discard",
+    "-Xlint:missing-interpolator"
+  )
 )
 
 resolvers ++= Seq(
