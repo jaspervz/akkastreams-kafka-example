@@ -15,11 +15,11 @@ resolvers ++= Seq(
 
 lazy val AkkaStreamKafkaVersion = "2.0.2"
 
-lazy val Avro4sVersion = "3.1.1"
+lazy val Avro4sVersion = "4.1.2"
 
-lazy val KafkaAvroSerializerVersion = "5.5.0"
+lazy val KafkaAvroSerializerVersion = "7.8.0"
 
-lazy val LogbackVersion = "1.2.3"
+lazy val LogbackVersion = "1.5.15"
 
 lazy val root = (project in file("."))
   .settings(
