@@ -7,7 +7,7 @@ import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Keep, Sink, Source}
 import com.sksamuel.avro4s.RecordFormat
 import com.typesafe.config.ConfigFactory
-import io.confluent.kafka.serializers.{AbstractKafkaAvroSerDeConfig, KafkaAvroDeserializer}
+import io.confluent.kafka.serializers.{AbstractKafkaSchemaSerDeConfig, KafkaAvroDeserializer}
 import org.apache.avro.generic.GenericRecord
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
@@ -78,7 +78,7 @@ object KafkaConsumer {
     // The configuration of the schema registry url must be provided for the deserializer because when
     // configured in the consumer settings, this setting isn't set for the deserializer.
     val schemaRegistryUrl = config.getString("schemaRegistry.url")
-    val deserializerConfig = Map(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG -> schemaRegistryUrl)
+    val deserializerConfig = Map(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG -> schemaRegistryUrl)
 
     val kafkaAvroDeserializer = new KafkaAvroDeserializer
     kafkaAvroDeserializer.configure(deserializerConfig.asJava, false)
