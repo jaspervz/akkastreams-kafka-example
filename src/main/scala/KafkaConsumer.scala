@@ -3,7 +3,6 @@ import akka.actor.ActorSystem
 import akka.kafka.scaladsl.{Committer, Consumer}
 import akka.kafka.scaladsl.Consumer.DrainingControl
 import akka.kafka.{CommitterSettings, ConsumerSettings, Subscriptions}
-import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Keep, Sink, Source}
 import com.sksamuel.avro4s.RecordFormat
 import com.typesafe.config.ConfigFactory
@@ -23,7 +22,6 @@ object KafkaConsumer {
 
   def main(args: Array[String]): Unit = {
     implicit val system: ActorSystem = ActorSystem("system")
-    implicit val materializer: ActorMaterializer = ActorMaterializer()
     implicit val executionContext: ExecutionContext = system.dispatcher
 
     val control = source.toMat(Sink.ignore)(Keep.both)

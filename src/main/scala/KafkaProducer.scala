@@ -2,7 +2,6 @@ import java.util.UUID
 import akka.actor.ActorSystem
 import akka.kafka.ProducerSettings
 import akka.kafka.scaladsl.Producer
-import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Sink, Source}
 import akka.{Done, NotUsed}
 import com.sksamuel.avro4s.RecordFormat
@@ -19,7 +18,6 @@ object KafkaProducer {
 
   def main(args: Array[String]): Unit = {
     implicit val system: ActorSystem = ActorSystem("system")
-    implicit val materializer: ActorMaterializer = ActorMaterializer()
     implicit val executionContext: ExecutionContext = system.dispatcher
 
     val done: Future[Done] = source.runWith(sink)
