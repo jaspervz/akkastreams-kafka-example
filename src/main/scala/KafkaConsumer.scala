@@ -27,7 +27,7 @@ object KafkaConsumer {
     implicit val executionContext: ExecutionContext = system.dispatcher
 
     val control = source.toMat(Sink.ignore)(Keep.both)
-      .mapMaterializedValue(DrainingControl.apply)
+      .mapMaterializedValue(DrainingControl.apply[Done])
 
     val drainingControl = control.run()
 
