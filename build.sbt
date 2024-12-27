@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   name := "akkastreams kafka example",
   version := "1.0-SNAPSHOT",
-  scalaVersion := "2.13.3",
+  scalaVersion := "2.13.15",
   scalacOptions ++= Seq(
     "-deprecation",
     "-Xfatal-warnings",
@@ -11,7 +11,7 @@ lazy val commonSettings = Seq(
 )
 
 resolvers ++= Seq(
-  "confluent" at "http://packages.confluent.io/maven/")
+  "confluent" at "https://packages.confluent.io/maven/")
 
 lazy val AkkaStreamKafkaVersion = "2.0.2"
 
