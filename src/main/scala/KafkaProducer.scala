@@ -1,5 +1,4 @@
 import java.util.UUID
-
 import akka.actor.ActorSystem
 import akka.kafka.ProducerSettings
 import akka.kafka.scaladsl.Producer
@@ -8,7 +7,7 @@ import akka.stream.scaladsl.{Sink, Source}
 import akka.{Done, NotUsed}
 import com.sksamuel.avro4s.RecordFormat
 import com.typesafe.config.ConfigFactory
-import io.confluent.kafka.serializers.{AbstractKafkaAvroSerDeConfig, KafkaAvroSerializer}
+import io.confluent.kafka.serializers.{AbstractKafkaSchemaSerDeConfig, KafkaAvroSerializer}
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.StringSerializer
 
@@ -55,7 +54,7 @@ object KafkaProducer {
     // The configuration of the schema registry url must be provided for the serializer because when
     // configured in the producer settings, this setting isn't set for the serializer.
     val schemaRegistryUrl = config.getString("schemaRegistry.url")
-    val serializerConfig = Map(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG -> schemaRegistryUrl)
+    val serializerConfig = Map(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG -> schemaRegistryUrl)
 
     val kafkaAvroSerializer = new KafkaAvroSerializer
     kafkaAvroSerializer.configure(serializerConfig.asJava, false)
